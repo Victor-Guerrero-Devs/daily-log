@@ -40,4 +40,30 @@ const deleteTask = async (req: Request, res: Response) => {
   }
 };
 
-export { getAllTasks, postTask, deleteTask };
+const patchTask = async (req: Request, res: Response) => {
+  try {
+    const task = new Task();
+    await task.editTask(Number(req.params.id), req.body);
+    res.status(200).json({ message: "Item has been updated" });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: "An error occurred" });
+      console.error(error.message);
+    }
+  }
+};
+
+const putTask = async (req: Request, res: Response) => {
+  try {
+    const task = new Task();
+    await task.putTask(Number(req.params.id), req.body);
+    res.status(200).json({ message: "Item has been entirely updated" });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      res.status(500).json({ error: "An error occurred" });
+      console.error(error.message);
+    }
+  }
+};
+
+export { getAllTasks, postTask, deleteTask, patchTask, putTask };

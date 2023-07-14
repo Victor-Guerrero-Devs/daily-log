@@ -42,18 +42,11 @@ class Task {
   async editTask(id: number, data: TaskData): Promise<QueryResult<TaskData>> {
     const query = `
       UPDATE tasks
-      SET title = $2, language = $3, description = $4, date_added = $5, is_completed = $6
+      SET is_completed = $2
       WHERE id = $1
       RETURNING *;
     `;
-    const values = [
-      id,
-      data.title,
-      data.language,
-      data.description,
-      data.date_added || new Date(),
-      data.is_completed || false,
-    ];
+    const values = [id, true];
     const client = await pool.connect();
     try {
       const result = await client.query<TaskData>(query, values);
@@ -70,6 +63,23 @@ class Task {
       RETURNING *;
     `;
     const values = [id];
+    const client = await pool.connect();
+    try {
+      const result = await client.query<TaskData>(query, values);
+      return result;
+    } finally {
+      client.release();
+    }
+  }
+
+  async putTask(id: number, data: TaskData): Promise<QueryResult<TaskData>> {
+    const query = `
+      UPDATE tasks
+      SET title = $2, language = $3, description = $4
+      WHERE id = $1
+      RETURNING *;
+    `;
+    const values = [id, data.title, data.language, data.description];
     const client = await pool.connect();
     try {
       const result = await client.query<TaskData>(query, values);
