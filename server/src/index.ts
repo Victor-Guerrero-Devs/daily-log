@@ -1,9 +1,17 @@
-import express from "express";
+import express, { Request, Response } from "express";
+import { config } from "dotenv";
+import pool from "./data/database";
+
+config();
+
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.send("Hello world");
 });
 
-app.listen(3000, () => console.log("Server is running on port 3000"));
+pool.connect().then(() => {
+  app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+});
