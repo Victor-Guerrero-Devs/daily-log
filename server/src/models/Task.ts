@@ -6,13 +6,18 @@ interface TaskData {
   title: string;
   language?: string;
   description?: string;
+  category?: number;
   date_added?: Date;
   is_completed?: boolean;
 }
 
 class Task {
   async getTasks(): Promise<QueryResult<TaskData>> {
-    const query = "SELECT * FROM tasks;";
+    const query = `
+      SELECT tasks.*, category.name AS category_name
+      FROM tasks 
+      LEFT JOIN category ON tasks.category = category.id;
+    `;
     const client = await pool.connect();
     try {
       const result = await client.query<TaskData>(query);
@@ -24,8 +29,10 @@ class Task {
 
   async getTaskById(id: number) {
     const query = `
-      SELECT * FROM tasks 
-      WHERE id = $1;
+     SELECT tasks.*, category.name AS category_name
+     FROM tasks 
+     LEFT JOIN category ON tasks.category = category.id
+     WHERE tasks.id = $1;
     `;
     const client = await pool.connect();
     try {
@@ -44,11 +51,11 @@ class Task {
 
   async addTask(data: TaskData): Promise<QueryResult<TaskData>> {
     const query = `
-      INSERT INTO tasks (title, language, description)
-      VALUES ($1, $2, $3)
+      INSERT INTO tasks (title, language, description, category)
+      VALUES ($1, $2, $3, $4)
       RETURNING *;
     `;
-    const values = [data.title, data.language, data.description];
+    const values = [data.title, data.language, data.description, data.category];
     const client = await pool.connect();
     console.log(values);
     try {

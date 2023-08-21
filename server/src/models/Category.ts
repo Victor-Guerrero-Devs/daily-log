@@ -8,7 +8,7 @@ interface CategoryData {
 
 class Category {
   async getCategories(): Promise<QueryResult<CategoryData>> {
-    const query = "SELECT * FROM categories;";
+    const query = "SELECT * FROM category;";
     const client = await pool.connect();
     try {
       const result = await client.query<CategoryData>(query);
@@ -20,7 +20,7 @@ class Category {
 
   async getCategoryById(id: number) {
     const query = `
-      SELECT * FROM categories 
+      SELECT * FROM category 
       WHERE id = $1;
     `;
     const client = await pool.connect();
@@ -40,7 +40,7 @@ class Category {
 
   async addCategory(data: CategoryData): Promise<QueryResult<CategoryData>> {
     const query = `
-      INSERT INTO categories (name)
+      INSERT INTO category (name)
       VALUES ($1)
       RETURNING *;
     `;

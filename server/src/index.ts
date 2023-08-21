@@ -3,6 +3,7 @@ import { config } from "dotenv";
 import cors from "cors";
 import pool from "./data/database";
 import taskRoutes from "./routes/taskRoutes";
+import categoryRoutes from "./routes/categoryRoutes";
 
 config();
 
@@ -18,6 +19,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 app.use("/tasks", taskRoutes);
+app.use("/categories", categoryRoutes);
 
 pool.connect().then(() => {
   app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

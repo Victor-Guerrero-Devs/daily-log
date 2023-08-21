@@ -46,8 +46,4 @@ const addCategory = async (req: Request, res: Response) => {
   }
 };
 
-export default {
-  getAllCategories,
-  getCategory,
-  addCategory,
-};
+export { getAllCategories, getCategory, addCategory };
