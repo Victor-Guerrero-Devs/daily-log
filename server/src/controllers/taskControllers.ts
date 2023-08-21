@@ -14,6 +14,25 @@ const getAllTasks = async (req: Request, res: Response) => {
   }
 };
 
+const getTask = async (req: Request, res: Response) => {
+  try {
+    const task = new Task();
+    const taskId = Number(req.params.id);
+    const taskById = await task.getTaskById(taskId);
+    if (!taskById) {
+      res.status(404).json({ error: "Task not found" });
+      return;
+    }
+    res.status(200).json(taskById);
+  } catch (error: unknown) {
+    console.log("Getting task by ID has gone wrong");
+    if (error instanceof Error) {
+      res.status(500).json({ error: "An error occurred" });
+      console.error(error);
+    }
+  }
+};
+
 const postTask = async (req: Request, res: Response) => {
   try {
     const task = new Task();
@@ -66,4 +85,4 @@ const putTask = async (req: Request, res: Response) => {
   }
 };
 
-export { getAllTasks, postTask, deleteTask, patchTask, putTask };
+export { getAllTasks, getTask, postTask, deleteTask, patchTask, putTask };

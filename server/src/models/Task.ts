@@ -22,6 +22,26 @@ class Task {
     }
   }
 
+  async getTaskById(id: number) {
+    const query = `
+      SELECT * FROM tasks 
+      WHERE id = $1;
+    `;
+    const client = await pool.connect();
+    try {
+      const values = [id];
+      const result = await client.query<TaskData>(query, values);
+      if (result.rows.length === 0) {
+        return null;
+      }
+      return result.rows[0];
+    } catch (error: any) {
+      console.log("SQL Error: " + error.message);
+    } finally {
+      client.release();
+    }
+  }
+
   async addTask(data: TaskData): Promise<QueryResult<TaskData>> {
     const query = `
       INSERT INTO tasks (title, language, description)

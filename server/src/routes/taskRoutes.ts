@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import {
   getAllTasks,
+  getTask,
   postTask,
   deleteTask,
   patchTask,
@@ -10,6 +11,8 @@ import {
 const router = express.Router();
 
 router.get("/", getAllTasks);
+
+router.get("/:id", getTask);
 
 router.post("/", postTask);
 
