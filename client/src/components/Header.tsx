@@ -1,8 +1,23 @@
+import { Link } from "react-router-dom";
+
 const Header: React.FC = () => {
   return (
-    <div>
-      <h1>Header</h1>
-    </div>
+    <header className="container p-4 flex flex-row justify-between items-center">
+      <div className="text-2xl font-bold">Daily Log</div>
+      <nav>
+        <ul className="flex flex-row gap-8">
+          <li>
+            <Link to={"/"}>Home</Link>
+          </li>
+          <li>
+            <Link to={"/tasks"}>Tasks</Link>
+          </li>
+          <li>
+            <Link to={"/add-task"}>Add Task</Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
   );
 };
 
