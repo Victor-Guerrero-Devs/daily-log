@@ -1,5 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 
+import TasksList from "../components/TasksList";
 import { Task } from "../types";
 import { fetchTasks } from "../api";
 
@@ -17,11 +18,9 @@ const TasksPage: React.FC = () => {
   console.log(fetchedTasks);
 
   return (
-    <div>
-      <h1>Tasks Page</h1>
-      {fetchedTasks.map((task) => (
-        <div key={task.id}>{task.title}</div>
-      ))}
+    <div className="container mx-auto p-8">
+      <h1 className="text-3xl text-center font-black">Tasks Page</h1>
+      <TasksList tasks={fetchedTasks} />
     </div>
   );
 };

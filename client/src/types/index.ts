@@ -1,7 +1,10 @@
 export interface Task {
-  id: string;
+  id: number;
   title: string;
   description: string;
   category: number;
-  completed: boolean;
+  category_name: string;
+  date_added: Date;
+  is_completed: boolean;
+  language: string;
 }
