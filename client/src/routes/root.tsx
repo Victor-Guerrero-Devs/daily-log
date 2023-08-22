@@ -5,7 +5,7 @@ const Root: React.FC = () => {
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-300">
+      <main className="min-h-[calc(100vh-64px)] bg-gray-300">
         <Outlet />
       </main>
     </>

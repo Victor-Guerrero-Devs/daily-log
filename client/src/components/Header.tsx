@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   return (
-    <header className="container p-4 flex flex-row justify-between items-center">
+    <header className="container p-4 flex flex-row justify-between items-center mx-auto">
       <div className="text-2xl font-bold">Daily Log</div>
       <nav>
         <ul className="flex flex-row gap-8">

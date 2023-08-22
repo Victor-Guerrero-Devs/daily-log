@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Root, ErrorPage, TasksPage } from "./routes/";
+import { loader as tasksLoader } from "./routes/tasks-page";
 import "./index.css";
 
 const router = createBrowserRouter([
@@ -11,6 +12,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
+        loader: tasksLoader,
         path: "tasks",
         element: <TasksPage />,
       },
